@@ -18,23 +18,12 @@ napari-dv
     :target: https://ci.appveyor.com/project/tlambert03/napari-dv/branch/master
     :alt: See Build Status on AppVeyor
 
-Deltavision/MRC file reader for napari
+Deltavision/MRC file reader plugin for napari
 
 ----
 
-This `napari`_ plugin was generated with `Cookiecutter`_ along with `@napari`_'s `cookiecutter-napari-plugin`_ template.
-
-
-Features
---------
-
-* TODO
-
-
-Requirements
-------------
-
-* TODO
+This `napari`_ plugin was generated with `Cookiecutter`_ along with
+`@napari`_'s `cookiecutter-napari-plugin`_ template.
 
 
 Installation
@@ -45,20 +34,11 @@ You can install "napari-dv" via `pip`_ from `PyPI`_::
     $ pip install napari-dv
 
 
-Usage
------
-
-* TODO
-
-Contributing
-------------
-Contributions are very welcome. Tests can be run with `tox`_, please ensure
-the coverage at least stays the same before you submit a pull request.
-
 License
 -------
 
-Distributed under the terms of the `MIT`_ license, "napari-dv" is free and open source software
+Distributed under the terms of the `MIT`_ license,
+"napari-dv" is free and open source software
 
 
 Issues
