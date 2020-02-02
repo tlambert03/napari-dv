@@ -3,10 +3,7 @@
 from napari.plugins import hookimpl
 from napari.plugins.hookspecs import LayerData, ReaderFunction, Optional, List
 import mrc
-import numpy as np
-
-# type annotations here are optional
-# see napari hookspecs for details on hooks that can be implemented
+from numpy import memmap
 
 
 def dv_reader(path: str) -> List[LayerData]:
@@ -21,7 +18,7 @@ def dv_reader(path: str) -> List[LayerData]:
         if not k.startswith("_")
     }
     metadata = {
-        k: v.tolist() if isinstance(metadata['mst'], np.memmap) else v
+        k: v.tolist() if isinstance(metadata['mst'], memmap) else v
         for k, v in metadata.items()
     }
     if nWaves == 1:

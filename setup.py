@@ -24,7 +24,7 @@ setup(
     long_description=read('README.rst'),
     py_modules=['napari_dv'],
     python_requires='>=3.6',
-    install_requires=['napari>=0.2.11'],
+    install_requires=['napari>=0.2.11', 'mrc>=0.1.5'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
