@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+__version__ = "0.2.0"
 
 from pluggy import HookimplMarker
 from napari.plugins.hookspecs import LayerData, ReaderFunction, Optional, List
