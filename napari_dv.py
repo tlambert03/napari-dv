@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 
 from pluggy import HookimplMarker
 from napari.plugins.hookspecs import LayerData, ReaderFunction, Optional, List
@@ -16,7 +16,9 @@ def dv_reader(path: str) -> List[LayerData]:
     dx = mfile.header.d[0]
     dz = mfile.header.d[2]
     metadata = {
-        k: getattr(mfile.hdr, k) for k in dir(mfile.hdr) if not k.startswith("_")
+        name: getattr(mfile.hdr, name)
+        for name in mrc.mrc.mrcHdrNames
+        if not name.startswith("_")
     }
     metadata = {
         k: v.tolist() if isinstance(metadata["mst"], memmap) else v
