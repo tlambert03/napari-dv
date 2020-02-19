@@ -13,7 +13,7 @@ def read(fname):
 
 setup(
     name="napari-dv",
-    version="0.2.1",
+    version="0.2.2",
     author="Talley Lambert",
     author_email="talley.lambert@gmail.com",
     maintainer="Talley Lambert",
@@ -39,5 +39,5 @@ setup(
         "Operating System :: OS Independent",
         "License :: OSI Approved :: MIT License",
     ],
-    entry_points={"napari.plugin": ["dv_reader = napari_dv",],},
+    entry_points={"napari.plugin": ["dv_reader = napari_dv"]},
 )
