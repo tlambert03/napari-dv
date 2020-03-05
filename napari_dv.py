@@ -2,7 +2,7 @@
 __version__ = "0.2.2"
 
 from pluggy import HookimplMarker
-from napari.plugins.hook_specifications import LayerData, ReaderFunction
+from napari.types import LayerData, ReaderFunction
 from typing import List, Optional
 import mrc
 from numpy import memmap
