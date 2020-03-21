@@ -13,7 +13,7 @@ def read(fname):
 
 setup(
     name="napari-dv",
-    version="0.2.2",
+    version="0.2.3",
     author="Talley Lambert",
     author_email="talley.lambert@gmail.com",
     maintainer="Talley Lambert",
