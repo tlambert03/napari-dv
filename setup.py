@@ -13,7 +13,7 @@ def read(fname):
 
 setup(
     name="napari-dv",
-    version="0.2.3",
+    version="0.2.4",
     author="Talley Lambert",
     author_email="talley.lambert@gmail.com",
     maintainer="Talley Lambert",
@@ -24,7 +24,7 @@ setup(
     long_description=read("README.rst"),
     py_modules=["napari_dv"],
     python_requires=">=3.6",
-    install_requires=["napari>=0.2.11", "mrc>=0.1.5", "pluggy>=0.13.1"],
+    install_requires=["mrc>=0.1.5", "napari_plugin_engine>=0.1.4"],
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",

@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
-__version__ = "0.2.3"
+__version__ = "0.2.4"
 
-from pluggy import HookimplMarker
-from napari.types import LayerData, ReaderFunction
-from typing import List, Optional
+from typing import Any, Callable, Dict, List, Optional, Tuple, Union
+
 import mrc
 from numpy import memmap
 
-napari_hook_implementation = HookimplMarker("napari")
+from napari_plugin_engine import napari_hook_implementation
+
+PathLike = Union[str, List[str]]
+LayerData = Union[Tuple[Any], Tuple[Any, Dict], Tuple[Any, Dict, str]]
+ReaderFunction = Callable[[PathLike], List[LayerData]]
 
 
 def dv_reader(path: str) -> List[LayerData]:
@@ -46,6 +49,6 @@ def dv_reader(path: str) -> List[LayerData]:
 
 
 @napari_hook_implementation
-def napari_get_reader(path: str) -> Optional[ReaderFunction]:
-    if path.endswith((".dv", ".mrc")):
+def napari_get_reader(path: Union[str, List[str]]) -> Optional[ReaderFunction]:
+    if isinstance(path, str) and path.endswith((".dv", ".mrc")):
         return dv_reader
