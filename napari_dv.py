@@ -1,19 +1,13 @@
 # -*- coding: utf-8 -*-
-__version__ = "0.2.4"
-
-from typing import Any, Callable, Dict, List, Optional, Tuple, Union
-
-import mrc
-from numpy import memmap
+__version__ = "0.2.5"
 
 from napari_plugin_engine import napari_hook_implementation
 
-PathLike = Union[str, List[str]]
-LayerData = Union[Tuple[Any], Tuple[Any, Dict], Tuple[Any, Dict, str]]
-ReaderFunction = Callable[[PathLike], List[LayerData]]
 
+def dv_reader(path: str):
+    from numpy import memmap
+    import mrc
 
-def dv_reader(path: str) -> List[LayerData]:
     mfile = mrc.Mrc(path)
     nWaves = mfile.header.NumWaves
     channel_axis = mfile.axisOrderStr().find("w") if nWaves > 1 else None
@@ -49,6 +43,6 @@ def dv_reader(path: str) -> List[LayerData]:
 
 
 @napari_hook_implementation
-def napari_get_reader(path: Union[str, List[str]]) -> Optional[ReaderFunction]:
+def napari_get_reader(path):
     if isinstance(path, str) and path.endswith((".dv", ".mrc")):
         return dv_reader
