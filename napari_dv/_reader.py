@@ -1,7 +1,10 @@
-# -*- coding: utf-8 -*-
-__version__ = "0.2.5"
-
 from napari_plugin_engine import napari_hook_implementation
+
+
+@napari_hook_implementation
+def napari_get_reader(path):
+    if isinstance(path, str) and path.endswith((".dv", ".mrc")):
+        return dv_reader
 
 
 def dv_reader(path: str):
@@ -40,9 +43,3 @@ def dv_reader(path: str):
         "metadata": metadata,
     }
     return [(mfile.data, params)]
-
-
-@napari_hook_implementation
-def napari_get_reader(path):
-    if isinstance(path, str) and path.endswith((".dv", ".mrc")):
-        return dv_reader
