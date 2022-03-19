@@ -1,5 +1,6 @@
-from napari_dv import napari_get_reader
 from pathlib import Path
+
+from napari_dv import napari_get_reader
 
 dv_file = Path(__file__).parent / "toxo.dv"
 

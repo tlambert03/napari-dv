@@ -1,4 +1,5 @@
 from typing import Union
+
 from napari_plugin_engine import napari_hook_implementation
 
 
@@ -27,7 +28,9 @@ def dv_reader(path: str):
                 if c == 1:
                     clim = (dv.hdr.min, dv.hdr.max)
                 else:
-                    clim = (getattr(dv.hdr, f"min{c}"), getattr(dv.hdr, f"max{c}"))
+                    min_ = (getattr(dv.hdr, f"min{c}"),)
+                    max_ = getattr(dv.hdr, f"max{c}")
+                    clim = (min_, max_)
                 contrast_limits.append(clim)
                 name.append(str(getattr(dv.hdr, f"wave{c}")) + "nm")
 

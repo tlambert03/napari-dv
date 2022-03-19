@@ -1,5 +1,6 @@
-from napari_dv import napari_write_image
 import numpy as np
+
+from napari_dv import napari_write_image
 
 
 def test_writer(tmpdir):
