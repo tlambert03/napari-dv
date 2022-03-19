@@ -6,7 +6,12 @@
 [![tests](https://github.com/tlambert03/napari-dv/workflows/tests/badge.svg)](https://github.com/tlambert03/napari-dv/actions)
 [![codecov](https://codecov.io/gh/tlambert03/napari-dv/branch/master/graph/badge.svg)](https://codecov.io/gh/tlambert03/napari-dv)
 
-Deltavision/MRC file reader for napari
+Deltavision/MRC file reader for napari.
+
+This wraps the [mrc](https://github.com/tlambert03/mrc) library.
+
+See also [napari-aicsimageio](https://github.com/AllenCellModeling/napari-aicsimageio), which also uses the [mrc](https://github.com/tlambert03/mrc) to provide dv file support,
+along with many other common file formats.
 
 ## Installation
 
