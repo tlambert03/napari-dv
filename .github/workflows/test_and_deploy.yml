@@ -31,10 +31,6 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - uses: tlambert03/napari-plugin-action@main
-        with:
-          package_name: napari-dv
-
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
