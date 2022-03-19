@@ -63,5 +63,5 @@ jobs:
         run: |
           git tag
           python -m build
-          twine check
+          twine check dist/*
           twine upload dist/*
