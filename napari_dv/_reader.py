@@ -1,6 +1,9 @@
-from typing import Union
+from typing import TYPE_CHECKING, List, Union
 
 from napari_plugin_engine import napari_hook_implementation
+
+if TYPE_CHECKING:
+    from napari.types import LayerDataTuple
 
 
 @napari_hook_implementation
@@ -9,7 +12,7 @@ def napari_get_reader(path):
         return dv_reader
 
 
-def dv_reader(path: str):
+def dv_reader(path: str) -> List["LayerDataTuple"]:
     import mrc
 
     with mrc.DVFile(path) as dv:
