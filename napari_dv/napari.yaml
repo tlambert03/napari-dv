@@ -1,0 +1,19 @@
+name: napari-dv
+schema_version: 0.1.0
+contributions:
+  commands:
+  - id: napari-dv.get_reader
+    title: Get Reader
+    python_name: napari_dv._reader:napari_get_reader
+  - id: napari-dv.write_image
+    title: Write Image
+    python_name: napari_dv._writer:napari_write_image
+  readers:
+  - command: napari-dv.get_reader
+    filename_patterns: ['*.dv', '*.mrc']
+    accepts_directories: true
+  writers:
+  - command: napari-dv.write_image
+    layer_types: ['image']
+    filename_extensions: ['.dv', '.mrc']
+    display_name: image

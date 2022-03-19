@@ -1,4 +1,9 @@
+from typing import TYPE_CHECKING, List, Union
+
 from napari_plugin_engine import napari_hook_implementation
+
+if TYPE_CHECKING:
+    from napari.types import LayerDataTuple
 
 
 @napari_hook_implementation
@@ -7,39 +12,41 @@ def napari_get_reader(path):
         return dv_reader
 
 
-def dv_reader(path: str):
-    from numpy import memmap
+def dv_reader(path: str) -> List["LayerDataTuple"]:
     import mrc
 
-    mfile = mrc.Mrc(path)
-    nWaves = mfile.header.NumWaves
-    channel_axis = mfile.axisOrderStr().find("w") if nWaves > 1 else None
-    dx = mfile.header.d[0]
-    dz = mfile.header.d[2]
-    metadata = {
-        name: getattr(mfile.hdr, name)
-        for name in mrc.mrc.mrcHdrNames
-        if not name.startswith("_")
-    }
-    metadata = {
-        k: v.tolist() if isinstance(metadata["mst"], memmap) else v
-        for k, v in metadata.items()
-    }
-    if nWaves == 1:
-        contrast_limits = list(mfile.header.mmm1[:2])
-        name = f"{mfile.hdr.wave[0]} nm"
-    else:
-        contrast_limits = []
-        name = []
-        for c in range(nWaves):
-            key = f"mmm{c+1}" if c == 0 else f"mm{c+1}"
-            contrast_limits.append(list(getattr(mfile.header, key)[:2]))
-            name.append(f"{mfile.hdr.wave[c]} nm")
-    params = {
-        "channel_axis": channel_axis,
-        "scale": [dz / dx, 1, 1],
-        "contrast_limits": contrast_limits,
-        "name": name,
-        "metadata": metadata,
-    }
-    return [(mfile.data, params)]
+    with mrc.DVFile(path) as dv:
+        data = dv.asarray()
+        meta = dv.hdr._asdict()
+        meta["ext_hdr"] = dv.ext_hdr._asdict() if dv.ext_hdr else {}
+        contrast_limits: Union[tuple, list]
+        name: Union[str, list]
+        if dv.hdr.nc == 1:
+            contrast_limits = (dv.hdr.min, dv.hdr.max)
+            name = f"{dv.hdr.wave1}nm"
+        else:
+            contrast_limits = []
+            name = []
+            for c in range(1, dv.hdr.nc + 1):
+                if c == 1:
+                    clim = (dv.hdr.min, dv.hdr.max)
+                else:
+                    min_ = (getattr(dv.hdr, f"min{c}"),)
+                    max_ = getattr(dv.hdr, f"max{c}")
+                    clim = (min_, max_)
+                contrast_limits.append(clim)
+                name.append(str(getattr(dv.hdr, f"wave{c}")) + "nm")
+
+        scale = [
+            getattr(dv.voxel_size, k.lower(), 1)
+            for k, v in dv.sizes.items()
+            if v > 1 and k != "C"
+        ]
+        params = {
+            "channel_axis": dv.axes.find("C") if dv.hdr.nc > 1 else None,
+            "scale": scale,
+            "contrast_limits": contrast_limits,
+            "name": name,
+            "metadata": meta,
+        }
+        return [(data, params)]
